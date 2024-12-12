@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
+  
+  <title>Frontend Mentor | Advice generator app</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    .attribution { font-size: 11px; text-align: center; }
+    .attribution a { color: hsl(228, 45%, 44%); }
+    body{
+      background-color: hsl(218, 23%, 16%);
+    }
+    section{
+      /* border: 0px solid white; */
+      border-radius: 10px;
+      width: 300px;
+      height: 200px;
+      margin: 50px auto;
+      background-color: hsl(217, 19%, 24%);
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      gap: 15px;
+      align-items: center;
+      text-align: center;
+      position: relative;
+    }
+    .dice{
+      /* border: 1px solid white; */
+      width: 50px;
+      height: 50px;
+      border-radius: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: absolute;
+      bottom: -25px;
+      background-color: hsl(150, 100%, 66%);
+      transition: 0.1s;
+    }
+    .dice:hover{
+      box-shadow: 0px 0px 40px hsla(150, 100%, 66%, 0.918);
+      cursor: pointer;
+    }
+    #eqall{
+      width: 90%;
+    }
+    section span{
+      color: hsl(150, 100%, 66%);
+    }
+    p{
+      font-size: 20px;
+    }
+    @media (max-width: 768px) {
+      section{
+        width: 90vw;
+      }
+      }
+  </style>
+</head>
+<body>
+  <section>
+    <span>ADVICE # <span id="advice">111</span></span>
+    <p id="advicetext">"."</p>
+    <img id="eqall"  src="./images/pattern-divider-desktop.svg" alt="">
+    <div class="dice"><img id="toggleadvice" src="./images/icon-dice.svg" alt=""></div>
+  </section>
+  
+  <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+    Coded by <a href="#">Godswill Chidiebube</a>.
+  </div>
+  <script>
+
+    const idNum= document.getElementById('advcse');
+    const advice= document.getElementById('advicetext');
+    // const adviceChange= document.getElementById('toggleadvice');
+
+    const loadAdvice = async () => {
+  try {
+    const response = await fetch('https://api.adviceslip.com/advice');
+    const data = await response.json();
+    const idNum = document.getElementById('advice');
+
+
+    const adviceText = document.getElementById('advicetext');
+    idNum.textContent = data.slip.id;
+    adviceText.textContent = `"${data.slip.advice}"`;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+const adviceChange = document.getElementById('toggleadvice');
+adviceChange.addEventListener('click', loadAdvice);
+loadAdvice();
+
+  </script>
+</body>
+</html>
